@@ -36,12 +36,9 @@ const expenseSchema = new Schema(
       ],
     },
     method: {
-      type: [String],
+      type: [{ type: String }],
       required: true,
-      enum: [
-        "Card",
-        "Cash",
-      ]
+      enum: ["Card", "Cash", "Direct Debit"],
     },
     amount: {
       type: Number,
