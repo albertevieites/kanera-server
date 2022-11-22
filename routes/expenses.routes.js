@@ -19,10 +19,10 @@ router.route("/").get((req, res) => {
 
 // POST "/api/expenses" Send a POST request of the Expenses
 router.route("/").post((req, res) => {
-  const { name, category, method, amount } = req.body;
+  const { description, category, method, amount } = req.body;
 
   const newExpense = new Expenses({
-    name,
+    description,
     category,
     method,
     amount,
@@ -56,19 +56,19 @@ router.route("/:id").delete((req, res) => {
 // POST "/api/expenses/:id" Get changes and edit expense by id
 router.route("/:id").patch((req, res) => {
   const { id } = req.params;
-  const { name, category, method, amount, date } = req.body;
+  const { date, description, category, method, amount } = req.body;
 
-  if (!name || !category || !method || !amount || !date) {
+  if (!date || !description || !category || !method || !amount) {
     res.json({ errorMessage: "Fields not completed!" });
   }
 
   Expenses.findByIdAndUpdate(id)
     .then((expenses) => {
-      expenses.name = name;
+      expenses.date = date;
+      expenses.description = description;
       expenses.category = category;
       expenses.method = method;
       expenses.amount = amount;
-      expenses.date = date;
 
       expenses
         .save()
