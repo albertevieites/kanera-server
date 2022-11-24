@@ -3,6 +3,7 @@
 **Kanera** is a money budgeting app which helps users to manage their income and expenses, visually showing them how wisely they are doing with their finances.
 
 ## Server Side Routes:
+**http://localhost:5005/api**
 
 |**METHOD**    |    **URL**           |    **PARAM**     |   **BODY**       |   **DESCRIPTION**  |
 |--------------|----------------------|------------------|------------------|--------------------|
