@@ -8,25 +8,16 @@ router.route("/").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-/* router.get("/", async (req, res, next) => {
-  try {
-    const allExpenses = await Expenses.find();
-    res.json(allExpenses);
-  } catch (error) {
-    next(error);
-  }
-}); */
-
 // POST "/api/expenses" Send a POST request of the Expenses
 router.route("/").post((req, res) => {
-  const { description, category, method, amount } = req.body;
+  const { date, description, category, method, amount } = req.body;
 
   const newExpense = new Expenses({
+    date,
     description,
     category,
     method,
     amount,
-    date: Date.parse(req.body.date),
   });
 
   newExpense
