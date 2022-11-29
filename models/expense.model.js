@@ -8,15 +8,15 @@ const expenseSchema = new Schema(
     },
     date: {
       type: Date,
-      required: true,
+      required: [true, 'must provide date'],
     },
     description: {
       type: String,
-      required: true,
+      required: [true, 'must provide description'],
     },
     category: {
       type: [String],
-      required: true,
+      required: [true, 'must provide category'],
       enum: [
         "Bills",
         "Charity",
@@ -36,13 +36,13 @@ const expenseSchema = new Schema(
       ],
     },
     method: {
-      type: [{ type: String }],
-      required: true,
+      type: [String],
+      required: [true, 'must provide method'],
       enum: ["Card", "Cash", "Direct Debit"],
     },
     amount: {
       type: Number,
-      required: true,
+      required: [true, 'must provide amount'],
     },
   },
   {
