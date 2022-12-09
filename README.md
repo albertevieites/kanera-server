@@ -12,3 +12,8 @@
 |`GET`         | `/api/expenses/:id`  |      `id`        |      n/a         | Get specific expense |
 |`DELETE`      | `/api/expenses/:id`  |      `id`        |      n/a         |  Delete specific expense |
 |`PATCH`       | `/api/expenses/:id`  |      `id`        | `date, name, category, method, amount` | Edit and updated specific expense |
+|`GET`         |  `/api/income`       |      n/a         |      n/a         |  Gets all income |
+|`POST`        |  `/api/income`       |      n/a         | `date, type, amount` | Create a new income |
+|`GET`         | `/api/income/:id`    |      `id`        |      n/a         | Get specific income |
+|`DELETE`      | `/api/income/:id`    |      `id`        |      n/a         |  Delete specific income |
+|`PATCH`       | `/api/income/:id`    |      `id`        | `date, type, amount` | Edit and updated specific income |
