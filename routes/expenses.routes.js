@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Expenses = require("../models/expense.model");
+const Expenses = require("../models/Expense.model");
 
 // GET "/api/expenses" Send a GET request of the Expenses
 router.get("/", async (req, res, next) => {
