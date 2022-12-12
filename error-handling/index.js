@@ -9,6 +9,11 @@ module.exports = (app) => {
     // always logs the error
     console.error("ERROR", req.method, req.path, err);
 
+    if (err.status === 401) {
+      // if express-jwt says that token is invalid
+      res.status(401).json({ errorMessage: "User not authorized" });
+    }
+
     // only render if the error ocurred before sending the response
     if (!res.headersSent) {
       res.status(500).render("error");
