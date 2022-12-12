@@ -1,7 +1,8 @@
 const router = require("express").Router();
-const User = require("../models/User.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
+const User = require("../models/User.model");
 
 const isAuthenticated = require("../middlewares/isAuthenticated");
 
@@ -28,7 +29,7 @@ router.post("/signup", async (req, res, next) => {
     }
 
     // Encrypt the password
-    const salt = await bcrypt.genSalt(process.env.USR_PWD_SALT);
+    const salt = await bcrypt.genSalt(12);
     const hashPassword = await bcrypt.hash(password, salt);
 
     // Create the user into the database
@@ -38,6 +39,7 @@ router.post("/signup", async (req, res, next) => {
       password: hashPassword,
     });
     res.status(201).json();
+
   } catch (error) {
     next(error);
   }
