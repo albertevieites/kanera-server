@@ -17,3 +17,6 @@
 |`GET`         | `/api/income/:id`    |      `id`        |      n/a         | Get specific income |
 |`DELETE`      | `/api/income/:id`    |      `id`        |      n/a         |  Delete specific income |
 |`PATCH`       | `/api/income/:id`    |      `id`        | `date, type, amount` | Edit and updated specific income |
+|`POST`        | `/auth/signup`       |      n/a         | `fullname, email, password` | Registers the user |
+|`POST`        | `/auth/login`        |      n/a         | `email, password` | Validates user credentials |
+|`AUTH`        | `/auth/verify`       |      n/a         |                  | Verifies if user is active (used for FE Logic) |
