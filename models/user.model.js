@@ -16,6 +16,8 @@ const userSchema = new Schema(
       required: [true, "Password is required."],
       minlength: 5,
     },
+    expense: [{type: Schema.Types.ObjectId, ref: "Expense"}],
+    income: [{type: Schema.Types.ObjectId, ref: "Income"}],
   },
   {
     timestamps: true,

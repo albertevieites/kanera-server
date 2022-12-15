@@ -1,10 +1,13 @@
 const router = require("express").Router();
 const Income = require("../models/Income.model");
 
+const isAuthenticated = require("../middlewares/isAuthenticated");
+
 // GET "/api/income" Send a GET request of the Income
-router.get("/", async (req, res, next) => {
+router.get("/", isAuthenticated, async (req, res, next) => {
   try {
-    const allIncome = await Income.find();
+    const allIncome = await Income.find().populate("owner");
+    console.log(allIncome);
     res.json(allIncome);
   } catch (err) {
     next(err);
@@ -12,7 +15,7 @@ router.get("/", async (req, res, next) => {
 });
 
 // POST "/api/income" Send a POST request of the Income
-router.post("/", async (req, res, next) => {
+router.post("/", isAuthenticated, async (req, res, next) => {
   const { date, type , amount } = req.body;
 
   if (!date || !type || !amount === undefined) {
@@ -32,13 +35,13 @@ router.post("/", async (req, res, next) => {
 });
 
 // GET "/api/income/:id" Send details from a single income
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", isAuthenticated, async (req, res, next) => {
   console.log(req.params);
 
   const { id } = req.params;
 
   try {
-    const singleIncome = await Income.findById(id);
+    const singleIncome = await Income.findById(id).populate("owner");
 
     res.json(singleIncome);
   } catch (error) {
@@ -47,7 +50,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // DELETE "/api/income/:id" Delete a single income
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -60,7 +63,7 @@ router.delete("/:id", async (req, res, next) => {
 });
 
 // PATCH "/api/income/:id" Get changes, edit and update income by id
-router.patch("/:id", async (req, res, next) => {
+router.patch("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
   const { date, type, amount } = req.body;
 
