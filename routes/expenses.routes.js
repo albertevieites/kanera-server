@@ -1,10 +1,13 @@
 const router = require("express").Router();
 const Expenses = require("../models/Expense.model");
 
+const isAuthenticated = require("../middlewares/isAuthenticated");
+
 // GET "/api/expenses" Send a GET request of the Expenses
-router.get("/", async (req, res, next) => {
+router.get("/", isAuthenticated, async (req, res, next) => {
   try {
-    const allExpenses = await Expenses.find();
+    const allExpenses = await Expenses.find().populate("owner");
+    console.log(allExpenses);
     res.json(allExpenses);
   } catch (err) {
     next(err);
@@ -12,7 +15,7 @@ router.get("/", async (req, res, next) => {
 });
 
 // POST "/api/expenses" Send a POST request of the Expenses
-router.post("/", async (req, res, next) => {
+router.post("/", isAuthenticated, async (req, res, next) => {
   const { date, description, category, method, amount } = req.body;
 
   if (!date || !description || !category || !method || !amount === undefined) {
@@ -34,13 +37,13 @@ router.post("/", async (req, res, next) => {
 });
 
 // GET "/api/expenses/:id" Send details from a single expense
-router.get("/:id", async (req, res, next) => {
-  console.log(req.params);
+router.get("/:id", isAuthenticated, async (req, res, next) => {
+  // console.log(req.params);
 
   const { id } = req.params;
 
   try {
-    const singleExpense = await Expenses.findById(id);
+    const singleExpense = await Expenses.findById(id).populate("owner");
 
     res.json(singleExpense);
   } catch (error) {
@@ -49,7 +52,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // DELETE "/api/expenses/:id" Delete a single expense in the Expenses
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -62,7 +65,7 @@ router.delete("/:id", async (req, res, next) => {
 });
 
 // PATCH "/api/expenses/:id" Get changes, edit and update expense by id
-router.patch("/:id", async (req, res, next) => {
+router.patch("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
   const { date, description, category, method, amount } = req.body;
 
