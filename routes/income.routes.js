@@ -1,7 +1,10 @@
 const router = require("express").Router();
-const Income = require("../models/Income.model");
 
 const isAuthenticated = require("../middlewares/isAuthenticated");
+
+const Income = require("../models/Income.model");
+const User = require("../models/User.model");
+
 
 // GET "/api/income" Send a GET request of the Income
 router.get("/", isAuthenticated, async (req, res, next) => {
@@ -16,6 +19,7 @@ router.get("/", isAuthenticated, async (req, res, next) => {
 
 // POST "/api/income" Send a POST request of the Income
 router.post("/", isAuthenticated, async (req, res, next) => {
+  const userId = req.payload._id;
   const { date, type , amount } = req.body;
 
   if (!date || !type || !amount === undefined) {
@@ -27,7 +31,13 @@ router.post("/", isAuthenticated, async (req, res, next) => {
       date,
       type,
       amount,
+      owner: userId,
     });
+
+    const updateDBIncome = await User.findByIdAndUpdate(userId, {
+      $push: { income: newIncome }
+    })
+
     res.json(newIncome);
   } catch (error) {
     next(error);
@@ -36,7 +46,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
 
 // GET "/api/income/:id" Send details from a single income
 router.get("/:id", isAuthenticated, async (req, res, next) => {
-  console.log(req.params);
+  // console.log(req.params);
 
   const { id } = req.params;
 
@@ -65,7 +75,7 @@ router.delete("/:id", isAuthenticated, async (req, res, next) => {
 // PATCH "/api/income/:id" Get changes, edit and update income by id
 router.patch("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
-  const { date, type, amount } = req.body;
+  const { date, type, amount, owner } = req.body;
 
   if (!date || !type || !amount) {
     res.json({ errorMessage: "Fields not completed!" });
@@ -76,6 +86,7 @@ router.patch("/:id", isAuthenticated, async (req, res, next) => {
       date,
       type,
       amount,
+      owner,
     });
     res.json("updated income successfully");
   } catch (error) {

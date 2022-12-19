@@ -1,12 +1,14 @@
 const router = require("express").Router();
-const Expenses = require("../models/Expense.model");
 
 const isAuthenticated = require("../middlewares/isAuthenticated");
+
+const Expense = require("../models/Expense.model");
+const User = require("../models/User.model");
 
 // GET "/api/expenses" Send a GET request of the Expenses
 router.get("/", isAuthenticated, async (req, res, next) => {
   try {
-    const allExpenses = await Expenses.find().populate("owner");
+    const allExpenses = await Expense.find().populate("owner");
     console.log(allExpenses);
     res.json(allExpenses);
   } catch (err) {
@@ -16,6 +18,7 @@ router.get("/", isAuthenticated, async (req, res, next) => {
 
 // POST "/api/expenses" Send a POST request of the Expenses
 router.post("/", isAuthenticated, async (req, res, next) => {
+  const userId = req.payload._id;
   const { date, description, category, method, amount } = req.body;
 
   if (!date || !description || !category || !method || !amount === undefined) {
@@ -23,13 +26,19 @@ router.post("/", isAuthenticated, async (req, res, next) => {
   }
 
   try {
-    const newExpense = await Expenses.create({
+    const newExpense = await Expense.create({
       date,
       description,
       category,
       method,
       amount,
+      owner: userId,
     });
+
+    const updateDBExpense = await User.findByIdAndUpdate(userId, {
+      $push: { expense: newExpense }
+    })
+
     res.json(newExpense);
   } catch (error) {
     next(error);
@@ -43,7 +52,7 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    const singleExpense = await Expenses.findById(id).populate("owner");
+    const singleExpense = await Expense.findById(id).populate("owner");
 
     res.json(singleExpense);
   } catch (error) {
@@ -56,7 +65,7 @@ router.delete("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    await Expenses.findByIdAndDelete(id);
+    await Expense.findByIdAndDelete(id);
     // res.status(200).json();
     res.json("expense deleted");
   } catch (error) {
@@ -67,19 +76,20 @@ router.delete("/:id", isAuthenticated, async (req, res, next) => {
 // PATCH "/api/expenses/:id" Get changes, edit and update expense by id
 router.patch("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
-  const { date, description, category, method, amount } = req.body;
+  const { date, description, category, method, amount, owner } = req.body;
 
   if (!date || !description || !category || !method || !amount) {
     res.json({ errorMessage: "Fields not completed!" });
   }
 
   try {
-    await Expenses.findByIdAndUpdate(id, {
+    await Expense.findByIdAndUpdate(id, {
       date,
       description,
       category,
       method,
       amount,
+      owner,
     });
     res.json("updated expense successfully");
   } catch (error) {
