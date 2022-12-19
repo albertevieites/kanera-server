@@ -8,7 +8,7 @@ const isAuthenticated = require("../middlewares/isAuthenticated");
 
 // POST "/api/auth/signup" => get a profile and create it into the database
 router.post("/signup", async (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { fullname, email, password } = req.body;
 
   if (!fullname || !email || !password) {
@@ -47,8 +47,9 @@ router.post("/signup", async (req, res, next) => {
 
 // POST "/api/auth/login" => validate user credentials
 router.post("/login", async (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { email, password } = req.body;
+  console.log(req.body);
 
   // Validations
   if (!email || !password) {

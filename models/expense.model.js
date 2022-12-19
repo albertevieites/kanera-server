@@ -1,5 +1,8 @@
 const { Schema, model } = require("mongoose");
 
+const arrCategory = require("../utils/category");
+const arrMethod = require("../utils/method");
+
 const expenseSchema = new Schema(
   {
     owner: {
@@ -17,28 +20,12 @@ const expenseSchema = new Schema(
     category: {
       type: [String],
       required: [true, 'must provide category'],
-      enum: [
-        "Bills",
-        "Charity",
-        "Concerts",
-        "Shopping",
-        "Eating Out",
-        "Entertainment",
-        "Finances",
-        "General",
-        "Gifts",
-        "Groceries",
-        "Gym",
-        "Healthcare",
-        "Holidays",
-        "Housing",
-        "Transportation",
-      ],
+      enum: arrCategory,
     },
     method: {
       type: [String],
       required: [true, 'must provide method'],
-      enum: ["Card", "Cash", "Direct Debit"],
+      enum: arrMethod,
     },
     amount: {
       type: Number,
