@@ -2,8 +2,8 @@ const router = require("express").Router();
 
 const isAuthenticated = require("../middlewares/isAuthenticated");
 
-const Expense = require("../models/Expense.model");
-const User = require("../models/User.model");
+const Expense = require("../models/expense.model");
+const User = require("../models/user.model");
 
 // GET "/api/expenses" Send a GET request of the Expenses
 router.get("/", isAuthenticated, async (req, res, next) => {
