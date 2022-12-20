@@ -31,9 +31,16 @@ const userSchema = new Schema(
       type: [String],
       enum: arrGender,
     },
+    city: {
+      type: String,
+    },
     country: {
       type: [String],
       enum: arrCountry,
+    },
+    userPhotoUrl: {
+      type: String,
+      default: "https://avatars.dicebear.com/api/personas/your-custom-seed.svg",
     },
     expense: [{ type: Schema.Types.ObjectId, ref: "Expense" }],
     income: [{ type: Schema.Types.ObjectId, ref: "Income" }],
