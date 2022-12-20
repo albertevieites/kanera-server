@@ -8,5 +8,6 @@ router.get("/", (req, res, next) => {
 router.use("/auth", require("./auth.routes"));
 router.use("/income", require("./income.routes"));
 router.use("/expenses", require("./expense.routes"));
+router.use("/profile", require("./profile.routes"));
 
 module.exports = router;

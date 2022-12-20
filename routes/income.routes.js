@@ -2,8 +2,8 @@ const router = require("express").Router();
 
 const isAuthenticated = require("../middlewares/isAuthenticated");
 
-const Income = require("../models/Income.model");
-const User = require("../models/User.model");
+const Income = require("../models/income.model");
+const User = require("../models/user.model");
 
 
 // GET "/api/income" Send a GET request of the Income
