@@ -38,7 +38,7 @@ const userSchema = new Schema(
       type: [String],
       enum: arrCountry,
     },
-    userPhotoUrl: {
+    image: {
       type: String,
       default: "https://avatars.dicebear.com/api/personas/your-custom-seed.svg",
     },
