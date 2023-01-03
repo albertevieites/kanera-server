@@ -1,9 +1,9 @@
-const router = require("express").Router();
-const fileUploader = require("../config/cloudinary.config");
-
+const router = require("express").Router(); 
 const isAuthenticated = require("../middlewares/isAuthenticated");
 
 const User = require("../models/user.model");
+const fileUploader = require("../config/cloudinary.config");
+
 
 // GET "/api/profile/:id" Send a POST request a specific Profile
 router.get("/:id", isAuthenticated, async (req, res, next) => {
@@ -23,7 +23,7 @@ router.get("/:id", isAuthenticated, async (req, res, next) => {
 // PATCH "/api/profile/:id" Get changes, edit or update a specific Profile
 router.patch("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
-  const { fullname, email, profession, age, gender, city, country, userPhotoUrl } = req.body;
+  const { fullname, email, profession, age, gender, city, country, image } = req.body;
 
   try {
     await User.findByIdAndUpdate(id, {
@@ -34,7 +34,7 @@ router.patch("/:id", isAuthenticated, async (req, res, next) => {
       gender,
       city,
       country,
-      userPhotoUrl
+      image
     })
     res.json("updated profile successfully")
   } catch (error) {
