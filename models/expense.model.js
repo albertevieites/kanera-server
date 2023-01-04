@@ -11,25 +11,26 @@ const expenseSchema = new Schema(
     },
     date: {
       type: Date,
-      required: [true, 'must provide date'],
+      required: [true, "must provide date"],
     },
     description: {
       type: String,
-      required: [true, 'must provide description'],
+      required: [true, "must provide description"],
     },
     category: {
       type: [String],
-      required: [true, 'must provide category'],
+      required: [true, "must provide category"],
       enum: arrCategory,
     },
     method: {
       type: [String],
-      required: [true, 'must provide method'],
+      required: [true, "must provide method"],
       enum: arrMethod,
     },
     amount: {
       type: Number,
-      required: [true, 'must provide amount'],
+      required: [true, "must provide amount"],
+      default: 0,
     },
   },
   {

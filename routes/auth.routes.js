@@ -82,6 +82,7 @@ router.post("/login", async (req, res, next) => {
       _id: foundUser._id,
       email: foundUser.email,
       fullname: foundUser.fullname,
+      image: foundUser.image,
     }; // payload will be like req.session.user
 
     // Create token

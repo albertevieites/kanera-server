@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const arrGender = require("../utils/gender");
-const arrCountry= require("../utils/country");
+const arrCountry = require("../utils/country");
 
 const userSchema = new Schema(
   {
@@ -44,6 +44,7 @@ const userSchema = new Schema(
     },
     expense: [{ type: Schema.Types.ObjectId, ref: "Expense" }],
     income: [{ type: Schema.Types.ObjectId, ref: "Income" }],
+    budget: [{ type: Schema.Types.ObjectId, ref: "Budget"}],
   },
   {
     timestamps: true,
