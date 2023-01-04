@@ -2,7 +2,6 @@ const arrCategory = [
   "Bills",
   "Charity",
   "Concerts",
-  "Shopping",
   "Eating Out",
   "Entertainment",
   "Finances",
@@ -13,6 +12,7 @@ const arrCategory = [
   "Healthcare",
   "Holidays",
   "Housing",
+  "Shopping",
   "Transportation",
 ];
 
